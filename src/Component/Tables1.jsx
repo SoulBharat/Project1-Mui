@@ -21,7 +21,7 @@ const Tables1 = () => {
   useEffect(() => {
     fetch('https://reqres.in/api/users/')
       .then((response) => response.json())
-      .then((res) => { console.log(res); setUsers(res.data) });
+      .then((res) => { setUsers(res.data) });
   }, [setUsers]);
 
 
@@ -39,17 +39,19 @@ const Tables1 = () => {
         <TableContainer component={Paper}>
           <Table sx={{}} aria-label="simple table">
             <TableHead >
-              <TableRow className='tabs'>
-                <TableCell align="center" style={{ fontSize: '1.3rem' }}>Id</TableCell>
-                <TableCell align="center" style={{ fontSize: '1.3rem' }}>Avatar</TableCell>
-                <TableCell align="center" style={{ fontSize: '1.3rem' }}>Email</TableCell>
-                <TableCell align="center" style={{ fontSize: '1.3rem' }}>First&nbsp;Name</TableCell>
-                <TableCell align="center" style={{ fontSize: '1.3rem' }}>Last&nbsp;Name</TableCell>
-                <TableCell align="center" style={{ fontSize: '1.3rem' }}>Action</TableCell>
+              <TableRow className='tab1'>
+                <TableCell align="center" style={{ fontSize: '1.3rem', color: "white" }}>Id</TableCell>
+                <TableCell align="center" style={{ fontSize: '1.3rem', color: "white" }}>Avatar</TableCell>
+                <TableCell align="center" style={{ fontSize: '1.3rem', color: "white" }}>Email</TableCell>
+                <TableCell align="center" style={{ fontSize: '1.3rem', color: "white" }}>First&nbsp;Name</TableCell>
+                <TableCell align="center" style={{ fontSize: '1.3rem', color: "white" }}>Last&nbsp;Name</TableCell>
+                <TableCell align="center" style={{ fontSize: '1.3rem', color: "white" }}>Action</TableCell>
+                {console.log(Users)}
               </TableRow>
             </TableHead>
+
             <TableBody>
-              {console.log(Users)}
+
               {Users.map(
                 (curr) => (
                   <TableRow
@@ -57,7 +59,7 @@ const Tables1 = () => {
                     <TableCell component="th" scope="row" align="center">
                       {curr.id}
                     </TableCell>
-                    <TableCell align="center"><Avatar alt="Yo" src={curr.avatar} /></TableCell>
+                    <TableCell className='avatar-alignment' ><Avatar alt="Yo" src={curr.avatar} /></TableCell>
                     <TableCell align="center">{curr.email}</TableCell>
                     <TableCell align="center">{curr.first_name}</TableCell>
                     <TableCell align="center">{curr.last_name}</TableCell>

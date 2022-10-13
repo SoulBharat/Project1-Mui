@@ -10,6 +10,7 @@ import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
 import Forms1 from "./Forms1"
 import EditIcon from '@mui/icons-material/Edit';
+import "./form-style.scss"
 
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
@@ -104,7 +105,9 @@ const Action = () => {
           Update Details
         </BootstrapDialogTitle>
         <DialogContent >
-          <Forms1 onSubmit={getData} />
+          <div className="form-style">
+            <Forms1 onSubmit={getData} />
+          </div>
         </DialogContent>
         <DialogActions>
           <Button autoFocus onClick={handleClose}>
