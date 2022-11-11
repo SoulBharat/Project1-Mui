@@ -1,62 +1,70 @@
-
 import * as React from 'react';
 import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
 import { useState, useEffect } from 'react';
 import TextField from '@mui/material/TextField';
 
 
 const Forms1 = (props) => {
-  const initialstate = { fname: '', lname: '', email: "" }
+  const initialstate = { first_name: '', last_name: '', email: "" }
   const [info, setInfo] = useState(initialstate);
   const [infoerror, setInfoerror] = useState({});
-  const [isSubmit, setIssubmit] = useState(false);
+  const [isSubmit, setIsSubmit] = useState(false);
+
 
 
   const handleSubmit = (e) => {
     e.preventDefault();
+
     props.onSubmit(info);
   }
 
   const handleChange = (e) => {
+    e.preventDefault();
     const { name, value } = e.target;
     setInfo({ ...info, [name]: value });
     console.log(info);
-
-
-
-
-  }
-  const handlerror = () => {
+    setIsSubmit(true);
     setInfoerror(validate(info));
-    setIssubmit(true);
+
+
   }
+
   useEffect(() => {
 
     if (Object.keys(infoerror).length === 0 && isSubmit) {
+
     }
-  }, [infoerror]);
+
+  }, [infoerror, isSubmit]);
+
   const validate = (values) => {
     const errors = {}
-    const regex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i;
+    const regex = /^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[A-Za-z]+$/;
 
-    if (!values.fname) {
+    if (!values.first_name) {
       errors.fname = "First name is not valid";
+      setIsSubmit(false);
     }
-    else if (values.fname.length < 3) {
-      errors.lname = "last name is not valid";
+    else if (values.first_name.length < 3) {
+      errors.lname = "first name is not valid";
+      setIsSubmit(false);
     }
 
-    if (!values.lname) {
+    if (!values.last_name) {
       errors.lname = "last name is not valid";
+      setIsSubmit(false);
     }
-    else if (values.lname.length < 3) {
+    else if (values.last_name.length < 3) {
       errors.lname = "last name is not valid";
     }
     if (!values.email) {
       errors.email = "email name is not valid";
+      setIsSubmit(false);
     }
-    else if (!regex.test(info.email)) {
+    else if (!regex.test(values.email)) {
       errors.email = " NOT VALID EMAIL ";
+      setIsSubmit(false);
     }
     return errors;
   }
@@ -72,14 +80,16 @@ const Forms1 = (props) => {
         noValidate
         autoComplete="off">
         <p>{infoerror.fname}</p>
-        <TextField label="First Name" name='fname' variant="outlined" value={info.fname} onChange={() => { handleChange(), handlerror() }} />
+        <TextField label="First Name" name='first_name' variant="outlined" value={info.first_name} onChange={handleChange} />
         < br ></br>
         <p>{infoerror.lname}</p>
-        <TextField label="Last Name" name="lname" variant="outlined" value={info.lname} onChange={handleChange} />
+        <TextField label="Last Name" name="last_name" variant="outlined" value={info.last_name} onChange={handleChange} />
         <br></br>
         <p>{infoerror.email}</p>
         <TextField label="Email" name="email" variant="outlined" value={info.email} onChange={handleChange} />
-        <button onClick={handleSubmit} > Submit</button>
+        <br>
+        </br>
+        <Button disabled={!isSubmit} onClick={handleSubmit}>Save changes</Button>
       </Box>
 
     </>

@@ -5,12 +5,14 @@ import { styled } from '@mui/material/styles';
 import Dialog from '@mui/material/Dialog';
 import DialogTitle from '@mui/material/DialogTitle';
 import DialogContent from '@mui/material/DialogContent';
-import DialogActions from '@mui/material/DialogActions';
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
 import Forms1 from "./Forms1"
 import EditIcon from '@mui/icons-material/Edit';
 import "./form-style.scss"
+import { toast } from 'material-react-toastify';
+import 'material-react-toastify/dist/ReactToastify.css';
+
 
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
@@ -51,7 +53,9 @@ BootstrapDialogTitle.propTypes = {
   onClose: PropTypes.func.isRequired,
 };
 
-const Action = () => {
+const Action = (props) => {
+
+
   const [open, setOpen] = React.useState(false);
 
   const handleClickOpen = () => {
@@ -71,9 +75,12 @@ const Action = () => {
 
 
 
+
+
+
   const updateme = (data) => {
 
-    fetch('https://reqres.in/api/users/', {
+    fetch(`https://reqres.in/api/users/${props.ids}`, {
       method: 'PUT',
       headers: {
         "Content-Type": "application/json",
@@ -82,10 +89,17 @@ const Action = () => {
       body: JSON.stringify(data)
     })
       .then(response => {
+        response.json()
         console.log(response)
+        toast.success("Your data Saved ");
       }).catch(e => {
         console.log(e);
+        toast.error("error ", {
+
+        });
+
       })
+
 
   }
 
@@ -105,15 +119,8 @@ const Action = () => {
           Update Details
         </BootstrapDialogTitle>
         <DialogContent >
-          <div className="form-style">
-            <Forms1 onSubmit={getData} />
-          </div>
+          <Forms1 className="form-style" onSubmit={(data) => { getData(data); handleClose(); }} />
         </DialogContent>
-        <DialogActions>
-          <Button autoFocus onClick={handleClose}>
-            Save changes
-          </Button>
-        </DialogActions>
       </BootstrapDialog>
     </div>
   );
